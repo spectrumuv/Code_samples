@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int mod = pow(10,9) + 7;
+    long long fact(int num) {
+        if(num==0) return 1;
+        long long fact=1;
+        for(int i=1;i<=num;i++) {
+            fact = fact*i;
+        }
+        return fact%mod;
+    }
+    int count_word(string word) {
+        long long count=1;
+        vector<int> char_count(26,0);
+        for(char c : word) {
+            char_count[c-'a']++;
+        } 
+        int p=1;
+        for(int i=0;i<26;i++) {
+            if(char_count[i]>1) {
+                p=p*fact(char_count[i]);
+            }
+        }
+        count = (int)(fact(word.length())/p);
+        return count%mod;
+    }
+    int countAnagrams(string s) {
+        long long count = 1;
+        vector<string> words;
+        string word="";
+        for(int i=0;i<s.length();i++) {
+            if(s[i]==' ') {
+                words.push_back(word);
+                word="";
+            }
+            else {
+                word=word+s[i];
+            }
+        }
+        words.push_back(word);
+        for(string word : words) {
+            int c = count_word(word);
+            count = count*c;
+        }
+
+        return count % mod;
+    }
+};
