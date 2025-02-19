@@ -46,3 +46,6 @@ public:
         return count % mod;
     }
 };
+
+Line 7: Char 24: runtime error: signed integer overflow: 479001600 * 13 cannot be represented in type 'int' (solution.cpp)
+SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior prog_joined.cpp:16:24
