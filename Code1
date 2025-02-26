@@ -1,51 +1,31 @@
-systeminfo
-
-Host Name:                 SRIB-T9FAHICGIV
-OS Name:                   Microsoft Windows 11 Enterprise
-OS Version:                10.0.22631 N/A Build 22631
-OS Manufacturer:           Microsoft Corporation
-OS Configuration:          Member Workstation
-OS Build Type:             Multiprocessor Free
-Registered Owner:          SRIB-
-Registered Organization:   SRIB-
-Product ID:                00329-00000-00003-AA181
-Original Install Date:     10-01-2025, 13:00:01
-System Boot Time:          25-02-2025, 10:50:30
-System Manufacturer:       SAMSUNG ELECTRONICS CO., LTD.
-System Model:              750BBC
-System Type:               x64-based PC
-Processor(s):              1 Processor(s) Installed.
-                           [01]: Intel64 Family 6 Model 158 Stepping 10 GenuineIntel ~2592 Mhz
-BIOS Version:              American Megatrends Inc. P07RFA.050.240319.JJ, 19-03-2024
-Windows Directory:         C:\Windows
-System Directory:          C:\Windows\system32
-Boot Device:               \Device\HarddiskVolume1
-System Locale:             4009
-Input Locale:              00004009
-Time Zone:                 (UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi
-Total Physical Memory:     16,275 MB
-Available Physical Memory: 5,093 MB
-Virtual Memory: Max Size:  28,051 MB
-Virtual Memory: Available: 10,311 MB
-Virtual Memory: In Use:    17,740 MB
-Page File Location(s):     C:\pagefile.sys
-Domain:                    sa.corp.samsungelectronics.net
-Logon Server:              \\HQGADC002
-Hotfix(s):                 6 Hotfix(s) Installed.
-                           [01]: KB5049624
-                           [02]: KB5027397
-                           [03]: KB5031274
-                           [04]: KB5041655
-                           [05]: KB5051989
-                           [06]: KB5053488
-Network Card(s):           2 NIC(s) Installed.
-                           [01]: Bluetooth Device (Personal Area Network)
-                                 Connection Name: Bluetooth Network Connection
-                                 Status:          Media disconnected
-                           [02]: Intel(R) Wireless-AC 9560 160MHz
-                                 Connection Name: Wi-Fi
-                                 DHCP Enabled:    Yes
-                                 DHCP Server:     107.111.153.153
-                                 IP address(es)
-                                 [01]: 107.99.94.102
-Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
+soumi@SRIB-T9FAHICGIV:/mnt/c/Users/soumi.s/ns3/ns-allinone-3.43$ sudo apt update
+[sudo] password for soumi: 
+Ign:1 http://archive.ubuntu.com/ubuntu noble InRelease
+Ign:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+Ign:3 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Ign:4 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Ign:1 http://archive.ubuntu.com/ubuntu noble InRelease
+Ign:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+Ign:3 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Ign:4 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Ign:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+Ign:1 http://archive.ubuntu.com/ubuntu noble InRelease
+Ign:3 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+Ign:4 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+Err:1 http://archive.ubuntu.com/ubuntu noble InRelease
+  Temporary failure resolving 'archive.ubuntu.com'
+Err:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+  Temporary failure resolving 'security.ubuntu.com'
+Err:3 http://archive.ubuntu.com/ubuntu noble-updates InRelease
+  Temporary failure resolving 'archive.ubuntu.com'
+Err:4 http://archive.ubuntu.com/ubuntu noble-backports InRelease
+  Temporary failure resolving 'archive.ubuntu.com'
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+All packages are up to date.
+W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/noble/InRelease  Temporary failure resolving 'archive.ubuntu.com'
+W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/noble-updates/InRelease  Temporary failure resolving 'archive.ubuntu.com'
+W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/noble-backports/InRelease  Temporary failure resolving 'archive.ubuntu.com'
+W: Failed to fetch http://security.ubuntu.com/ubuntu/dists/noble-security/InRelease  Temporary failure resolving 'security.ubuntu.com'
+W: Some index files failed to download. They have been ignored, or old ones used instead.
