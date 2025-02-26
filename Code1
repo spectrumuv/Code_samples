@@ -1,14 +1,11 @@
 CORP+soumi.s@SRIB-T9FAHICGIV MINGW64 ~/ns3/ns-allinone-3.43/ns-3.43/ns-3-dev (master)
-$ ./ns3 configure --enable-examples --enable-tests --generator=Ninja
+$ ./ns3 configure --enable-examples --enable-tests -- -G Ninja
 Traceback (most recent call last):
   File "C:/Users/soumi.s/ns3/ns-allinone-3.43/ns-3.43/ns-3-dev/ns3", line 1970, in <module>
     main()
-  File "C:/Users/soumi.s/ns3/ns-allinone-3.43/ns-3.43/ns-3-dev/ns3", line 1746, in main
-    args = parse_args(sys.argv[1:])
-           ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:/Users/soumi.s/ns3/ns-allinone-3.43/ns-3.43/ns-3-dev/ns3", line 611, in parse_args
-    raise Exception(msg)
-Exception: Unknown options were given: --generator=Ninja.
-To see the allowed options add the `--help` option.
-To forward configuration or runtime options, put them after '--'.
-Try: ./ns3 configure -- --generator=Ninja
+  File "C:/Users/soumi.s/ns3/ns-allinone-3.43/ns-3.43/ns-3-dev/ns3", line 1843, in main
+    current_cmake_cache_folder, current_cmake_generator = search_cmake_cache(build_profile)
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:/Users/soumi.s/ns3/ns-allinone-3.43/ns-3.43/ns-3-dev/ns3", line 787, in search_cmake_cache
+    raise Exception("No generator available.")
+Exception: No generator available.
