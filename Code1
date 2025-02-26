@@ -1,11 +1,3 @@
-CORP+soumi.s@SRIB-T9FAHICGIV MINGW64 ~/ns3/ns-allinone-3.43/ns-3.43/ns-3-dev (master)
-$ ./ns3 configure --enable-examples --enable-tests -- -G Ninja
-Traceback (most recent call last):
-  File "C:/Users/soumi.s/ns3/ns-allinone-3.43/ns-3.43/ns-3-dev/ns3", line 1970, in <module>
-    main()
-  File "C:/Users/soumi.s/ns3/ns-allinone-3.43/ns-3.43/ns-3-dev/ns3", line 1843, in main
-    current_cmake_cache_folder, current_cmake_generator = search_cmake_cache(build_profile)
-                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:/Users/soumi.s/ns3/ns-allinone-3.43/ns-3.43/ns-3-dev/ns3", line 787, in search_cmake_cache
-    raise Exception("No generator available.")
-Exception: No generator available.
+wsl --install -d Ubuntu-24.04
+Installing: Ubuntu 24.04 LTS
+An error occurred during installation. Distribution Name: 'Ubuntu 24.04 LTS' Error Code: 0x800705b4
