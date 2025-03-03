@@ -1,10 +1,1017 @@
-./ns3 run scratch/singlecell_singleue.cc
-[0/2] Re-checking globbed directories...
-[1/2] Building CXX object scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o
-FAILED: scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o 
-/usr/bin/c++ -DEIGEN_MPL2_ONLY -DHAVE_BOOST -DHAVE_BOOST_UNITS -DHAVE_EIGEN3 -DHAVE_LIBXML2 -DHAVE_PACKET_H -DHAVE_SQLITE3 -DNS3_ASSERT_ENABLE -DNS3_BUILD_PROFILE_DEBUG -DNS3_LOG_ENABLE -DPROJECT_SOURCE_PATH=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42\" -DRAW_SOCK_CREATOR=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/src/fd-net-device/ns3.42-raw-sock-creator-default\" -DTAP_DEV_CREATOR=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/src/fd-net-device/ns3.42-tap-device-creator-default\" -D__LINUX__ -I/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include -I/usr -I/usr/include/eigen3 -I/usr/include/libxml2 -Os -g -DNDEBUG -std=c++20 -fPIE   -fno-semantic-interposition -fdiagnostics-color=always -Wall -Wpedantic -MD -MT scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o -MF scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o.d -o scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o -c /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc: In function ‘int main(int, char**)’:
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:71:89: error: ‘MakeCallBack’ was not declared in this scope
-   71 |     ueLteDevs.Get(0)->GetObject<LteUeNetDevice>()->GetPhy()->TraceConnect("PhyTxEnd","",MakeCallBack(&TxTrace));
-      |                                                                                         ^~~~~~~~~~~~
-ninja: build stopped: subcommand failed.
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 975-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 976-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+frame 977 subframe 1 sending SRS (offset=0, period=40)
+-----frame 977-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 978-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 979-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 980-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+frame 981 subframe 1 sending SRS (offset=0, period=40)
+-----frame 981-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 982-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 983-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 984-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+frame 985 subframe 1 sending SRS (offset=0, period=40)
+-----frame 985-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 986-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 987-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 988-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+frame 989 subframe 1 sending SRS (offset=0, period=40)
+-----frame 989-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 990-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 991-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 992-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+frame 993 subframe 1 sending SRS (offset=0, period=40)
+-----frame 993-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 994-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 995-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 996-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+frame 997 subframe 1 sending SRS (offset=0, period=40)
+-----frame 997-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 998-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 999-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received SIB1
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----frame 1000-----
+-----sub frame 1-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+Resetting frame counter at phy. Current value = 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+received MIB
+-----sub frame 2-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 3-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 4-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 5-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 6-----
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRP -73.7457 and RBnum 25
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+0x55ad918de520 PSS RNTI 1 cellId 1 has RSRQ -3.01035 and RBnum 25
+-----sub frame 7-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x55ad918de520 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
