@@ -1,87 +1,121 @@
- /*
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation;
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-
-#include "ns3/applications-module.h"
 #include "ns3/core-module.h"
-#include "ns3/internet-module.h"
 #include "ns3/network-module.h"
-#include "ns3/point-to-point-module.h"
-
-// Default Network Topology
-//
-//       10.1.1.0
-// n0 -------------- n1
-//    point-to-point
-//
+#include "ns3/mobility-module.h"
+#include "ns3/lte-module.h"
+#include "ns3/internet-module.h"
+#include "ns3/applications-module.h"
 
 using namespace ns3;
 
-NS_LOG_COMPONENT_DEFINE("FirstScriptExample");
+void TxPacketTrace(std::string context, Ptr<const Packet> packet) {
+    NS_LOG_INFO(Simulator::Now().GetSeconds()<<"s: Packet transmitted from "<<context);
+}
 
-int
-main(int argc, char* argv[])
-{
-    CommandLine cmd(__FILE__);
-    cmd.Parse(argc, argv);
+void RxPacketTrace(std::string context, Ptr<const Packet> packet) {
+    NS_LOG_INFO(Simulator::Now().GetSeconds()<<"s: Packet received at "<<context);
+}
 
-    Time::SetResolution(Time::NS);
-    LogComponentEnable("UdpEchoClientApplication", LOG_LEVEL_INFO);
-    LogComponentEnable("UdpEchoServerApplication", LOG_LEVEL_INFO);
+int main(int argc, char *argv[]) {
 
-    NodeContainer nodes;
-    nodes.Create(2);
+    LogComponentEnable("LteHelper", LOG_LEVEL_INFO);
+    //LogComponentEnable("LteUePhy", LOG_LEVEL_INFO);
+    //LogComponentEnable("LteEnbPhy", LOG_LEVEL_INFO);
 
-    PointToPointHelper pointToPoint;
-    pointToPoint.SetDeviceAttribute("DataRate", StringValue("5Mbps"));
-    pointToPoint.SetChannelAttribute("Delay", StringValue("2ms"));
 
-    NetDeviceContainer devices;
-    devices = pointToPoint.Install(nodes);
+    Ptr<LteHelper> lteHelper = CreateObject<LteHelper>();
 
-    InternetStackHelper stack;
-    stack.Install(nodes);
+    NodeContainer enbNodes, ueNodes;
+    enbNodes.Create(1);
+    ueNodes.Create(1);
 
-    Ipv4AddressHelper address;
-    address.SetBase("10.1.1.0", "255.255.255.0");
+    MobilityHelper mobility;
 
-    Ipv4InterfaceContainer interfaces = address.Assign(devices);
+    mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
 
-    UdpEchoServerHelper echoServer(9);
+    mobility.Install(enbNodes);
+    mobility.Install(ueNodes);
 
-    ApplicationContainer serverApps = echoServer.Install(nodes.Get(1));
-    serverApps.Start(Seconds(1.0));
-    serverApps.Stop(Seconds(10.0));
+    Ptr<MobilityModel> enbMobility = enbNodes.Get(0)->GetObject<MobilityModel>();
+    enbMobility->SetPosition(Vector(0.0,0.0,0.0));
 
-    UdpEchoClientHelper echoClient(interfaces.GetAddress(1), 9);
-    echoClient.SetAttribute("MaxPackets", UintegerValue(1));
-    echoClient.SetAttribute("Interval", TimeValue(Seconds(1.0)));
-    echoClient.SetAttribute("PacketSize", UintegerValue(1024));
+    Ptr<MobilityModel> ueMobility = ueNodes.Get(0)->GetObject<MobilityModel>();
+    ueMobility->SetPosition(Vector(100.0,0.0,0.0));
+ 
+    NetDeviceContainer enbLteDevs = lteHelper->InstallEnbDevice(enbNodes);
+    NetDeviceContainer ueLteDevs = lteHelper->InstallUeDevice(ueNodes);
 
-    ApplicationContainer clientApps = echoClient.Install(nodes.Get(0));
-    clientApps.Start(Seconds(2.0));
-    clientApps.Stop(Seconds(10.0));
+    lteHelper->Attach(ueLteDevs, enbLteDevs.Get(0));
 
+    InternetStackHelper internet;
+    internet.Install(ueNodes);
+    internet.Install(enbNodes);
+
+    Ipv4AddressHelper ipv4;
+    ipv4.SetBase("10.1.1.0", "255.255.255.0");
+    Ipv4InterfaceContainer ueIpIface = ipv4.Assign(ueLteDevs);
+
+    uint16_t port = 9;
+    UdpServerHelper udpServer(port);
+    ApplicationContainer serverApp = udpServer.Install(ueNodes.Get(0));
+    serverApp.Start(Seconds(1.0));
+    serverApp.Stop(Seconds(10.0));
+
+    UdpClientHelper udpClient(ueIpIface.GetAddress(0),port);
+    udpClient.SetAttribute("MaxPackets", UintegerValue(1));
+    udpClient.SetAttribute("Interval", TimeValue(MilliSeconds(100)));
+    udpClient.SetAttribute("PacketSize", UintegerValue(1024));
+
+    ApplicationContainer clientApp = udpClient.Install(enbNodes.Get(0));
+    clientApp.Start(Seconds(2.0));
+    clientApp.Stop(Seconds(10.0));
+
+    lteHelper->EnableTraces();
+
+    enbLteDevs.Get(0)->TraceConnect("PhyRxEnd","eNB",MakeCallback(&RxPacketTrace));
+    ueLteDevs.Get(0)->TraceConnect("PhyTxEnd","UE",MakeCallback(&TxPacketTrace));
+    
+    
     Simulator::Run();
     Simulator::Destroy();
+
     return 0;
 }
 
-./ns3 run examples/tutorial/first.cc
+
+./ns3 run scratch/singlecell_singleue.cc
 [0/2] Re-checking globbed directories...
-ninja: no work to do.
-At time +2s client sent 1024 bytes to 10.1.1.2 port 9
-At time +2.00369s server received 1024 bytes from 10.1.1.1 port 49153
-At time +2.00369s server sent 1024 bytes to 10.1.1.1 port 49153
-At time +2.00737s client received 1024 bytes from 10.1.1.2 port 9
+[1/2] Building CXX object scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o
+FAILED: scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o
+/usr/bin/c++ -DEIGEN_MPL2_ONLY -DHAVE_BOOST -DHAVE_BOOST_UNITS -DHAVE_EIGEN3 -DHAVE_LIBXML2 -DHAVE_PACKET_H -DHAVE_SQLITE3 -DNS3_ASSERT_ENABLE -DNS3_BUILD_PROFILE_DEBUG -DNS3_LOG_ENABLE -DPROJECT_SOURCE_PATH=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42\" -DRAW_SOCK_CREATOR=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/src/fd-net-device/ns3.42-raw-sock-creator-default\" -DTAP_DEV_CREATOR=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/src/fd-net-device/ns3.42-tap-device-creator-default\" -D__LINUX__ -I/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include -I/usr -I/usr/include/eigen3 -I/usr/include/libxml2 -Os -g -DNDEBUG -std=c++20 -fPIE   -fno-semantic-interposition -fdiagnostics-color=always -Wall -Wpedantic -MD -MT scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o -MF scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o.d -o scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o -c /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc
+In file included from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/log.h:24,
+                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/fatal-error.h:24,
+                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/assert.h:53,
+                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/simple-ref-count.h:24,
+                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/event-impl.h:22,
+                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/event-id.h:23,
+                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include/ns3/event-id.h:1,
+                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/helper/event-garbage-collector.h:22,
+                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include/ns3/event-garbage-collector.h:1,
+                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include/ns3/core-module.h:9,
+                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:1:
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc: In function ‘void TxPacketTrace(std::string, ns3::Ptr<const ns3::Packet>)’:  
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/log-macros-enabled.h:185:13: error: ‘g_log’ was not declared in this scope; did you mean ‘u_long’?
+  185 |         if (g_log.IsEnabled(level))                                                                \
+      |             ^~~~~
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/log.h:275:26: note: in expansion of macro ‘NS_LOG’
+  275 | #define NS_LOG_INFO(msg) NS_LOG(ns3::LOG_INFO, msg)
+      |                          ^~~~~~
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:11:5: note: in expansion of macro ‘NS_LOG_INFO’
+   11 |     NS_LOG_INFO(Simulator::Now().GetSeconds()<<"s: Packet transmitted from "<<context);
+      |     ^~~~~~~~~~~
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc: In function ‘void RxPacketTrace(std::string, ns3::Ptr<const ns3::Packet>)’:  
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/log-macros-enabled.h:185:13: error: ‘g_log’ was not declared in this scope; did you mean ‘u_long’?
+  185 |         if (g_log.IsEnabled(level))                                                                \
+      |             ^~~~~
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/log.h:275:26: note: in expansion of macro ‘NS_LOG’
+  275 | #define NS_LOG_INFO(msg) NS_LOG(ns3::LOG_INFO, msg)
+      |                          ^~~~~~
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:15:5: note: in expansion of macro ‘NS_LOG_INFO’
+   15 |     NS_LOG_INFO(Simulator::Now().GetSeconds()<<"s: Packet received at "<<context);
+      |     ^~~~~~~~~~~
+ninja: build stopped: subcommand failed.
