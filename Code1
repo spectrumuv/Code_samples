@@ -1,7 +1,3 @@
 ./ns3 run scratch/singlecell_singleue.cc
 [0/2] Re-checking globbed directories...
 ninja: no work to do.
-NS_ASSERT failed, cond="socketFactory", msg="CreateSocket: can not create a ns3::UdpSocketFactory - perhaps the node is missing the required protocol.", +2.000000000s 0 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/network/model/socket.cc, line=78
-NS_FATAL, terminating
-terminate called without an active exception
-Command 'build/scratch/ns3.42-singlecell_singleue-default' died with <Signals.SIGABRT: 6>.
