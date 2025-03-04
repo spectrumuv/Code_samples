@@ -1,7 +1,10 @@
 ./ns3 run scratch/singlecell_singleue.cc
 [0/2] Re-checking globbed directories...
 [2/2] Linking CXX executable /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/scratch/ns3.42-singlecell_singleue-default
-NS_ASSERT failed, cond="ueIpv4 || ueIpv6", msg="UEs need to have IPv4/IPv6 installed before EPS bearers can be activated", +0.000000000s -1 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/lte/helper/no-backhaul-epc-helper.cc, line=480
+msg="Incompatible types. (feed to "c++filt -t" if needed)
+got=CallbackImpl<void,ns3::Ptr<ns3::Packet const>,ns3::Address,ns3::Address>
+expected=CallbackImpl<void,ns3::Ptr<ns3::Packet const>>", +0.000000000s -1 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h, line=628
++0.000000000s -1 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/traced-callback.h, line=143
 NS_FATAL, terminating
 terminate called without an active exception
 Command 'build/scratch/ns3.42-singlecell_singleue-default' died with <Signals.SIGABRT: 6>.
