@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     NetDeviceContainer enbLteDevs = lteHelper->InstallEnbDevice(enbNodes);
     NetDeviceContainer ueLteDevs = lteHelper->InstallUeDevice(ueNodes);
 
-    lteHelper->Attach(ueLteDevs, enbLteDevs.Get(0));
+    lteHelper->Attach(ueLteDevs.Get(0), enbLteDevs.Get(0));
 
     InternetStackHelper internet;
     internet.Install(ueNodes);
@@ -65,8 +65,8 @@ int main(int argc, char *argv[]) {
     serverApp.Stop(Seconds(10.0));
 
     UdpClientHelper udpClient(ueIpIface.GetAddress(0),port);
-    udpClient.SetAttribute("MaxPackets", UintegerValue(2));
-    udpClient.SetAttribute("Interval", TimeValue(MilliSeconds(100)));
+    udpClient.SetAttribute("MaxPackets", UintegerValue(10));
+    udpClient.SetAttribute("Interval", TimeValue(MilliSeconds(50)));
     udpClient.SetAttribute("PacketSize", UintegerValue(1024));
 
     ApplicationContainer clientApp = udpClient.Install(enbNodes.Get(0));
@@ -74,9 +74,12 @@ int main(int argc, char *argv[]) {
     clientApp.Stop(Seconds(10.0));
 
     lteHelper->EnableTraces();
-
+    /*
     enbLteDevs.Get(0)->TraceConnect("PhyRxEnd","eNB",MakeCallback(&RxPacketTrace));
     ueLteDevs.Get(0)->TraceConnect("PhyTxEnd","UE",MakeCallback(&TxPacketTrace));
+    */
+    Config::Connect("/NodeList/*/DeviceList/*/Tx", MakeCallback(&TxPacketTrace));
+    Config::Connect("/NodeList/*/DeviceList/*/Rx", MakeCallback(&RxPacketTrace));
     
     Simulator::Stop(Seconds(10.0));
     Simulator::Run();
@@ -87,42 +90,8 @@ int main(int argc, char *argv[]) {
 
 ./ns3 run scratch/singlecell_singleue.cc
 [0/2] Re-checking globbed directories...
-ninja: no work to do.
-
-
-
-
-
-
-
-
-ninja: no work to do.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-^CProcess was interrupted by the user
+[2/2] Linking CXX executable /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/scratch/ns3.42-singlecell_singleue-default
+msg="Could not connect callback to /NodeList/*/DeviceList/*/Tx", +0.000000000s -1 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/config.cc, line=983
+NS_FATAL, terminating
+terminate called without an active exception
+Command 'build/scratch/ns3.42-singlecell_singleue-default' died with <Signals.SIGABRT: 6>.
