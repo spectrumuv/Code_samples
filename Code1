@@ -1,4 +1,4 @@
- ./ns3 run scratch/singlecell_singleue.cc
+./ns3 run scratch/singlecell_singleue.cc
 [0/2] Re-checking globbed directories...
 [2/2] Linking CXX executable /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/scratch/ns3.42-singlecell_singleue-default
 2s: Packet Transmitted from 10.1.1.2 to 10.1.1.1
