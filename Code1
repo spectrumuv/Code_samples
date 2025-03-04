@@ -1,15 +1,10 @@
-RSRP: -48.9745
-0x565302a976b0 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
------sub frame 8-----
-RSRP: -48.9745
-0x565302a976b0 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
------sub frame 9-----
-RSRP: -48.9745
-0x565302a976b0 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
------sub frame 10-----
-RSRP: -48.9745
-0x565302a976b0 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
-
-almost 200+ lines of log got printed these are the last lines
-I want just the ip adress of the source and destination and the timestamps when packets are transmitted from ue to enb and vice versa
-no need for such physical layer details
+./ns3 run scratch/singlecell_singleue.cc
+[0/2] Re-checking globbed directories...
+[2/2] Linking CXX executable /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/scratch/ns3.42-singlecell_singleue-default
+msg="Incompatible types. (feed to "c++filt -t" if needed)
+got=CallbackImpl<void,std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >,ns3::Ptr<ns3::Packet const>,ns3::Ptr<ns3::Ipv4>,unsigned int>
+expected=CallbackImpl<void,ns3::Ptr<ns3::Packet const>,ns3::Ptr<ns3::Ipv4>,unsigned int>", +0.000000000s -1 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h, line=628
++0.000000000s -1 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/traced-callback.h, line=143
+NS_FATAL, terminating
+terminate called without an active exception
+Command 'build/scratch/ns3.42-singlecell_singleue-default' died with <Signals.SIGABRT: 6>.
