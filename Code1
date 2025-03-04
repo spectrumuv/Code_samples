@@ -1,16 +1,15 @@
-./ns3 run scratch/singlecell_singleue.cc
-[0/2] Re-checking globbed directories...
-[1/2] Building CXX object scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o
-FAILED: scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o 
-/usr/bin/c++ -DEIGEN_MPL2_ONLY -DHAVE_BOOST -DHAVE_BOOST_UNITS -DHAVE_EIGEN3 -DHAVE_LIBXML2 -DHAVE_PACKET_H -DHAVE_SQLITE3 -DNS3_ASSERT_ENABLE -DNS3_BUILD_PROFILE_DEBUG -DNS3_LOG_ENABLE -DPROJECT_SOURCE_PATH=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42\" -DRAW_SOCK_CREATOR=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/src/fd-net-device/ns3.42-raw-sock-creator-default\" -DTAP_DEV_CREATOR=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/src/fd-net-device/ns3.42-tap-device-creator-default\" -D__LINUX__ -I/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include -I/usr -I/usr/include/eigen3 -I/usr/include/libxml2 -Os -g -DNDEBUG -std=c++20 -fPIE   -fno-semantic-interposition -fdiagnostics-color=always -Wall -Wpedantic -MD -MT scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o -MF scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o.d -o scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o -c /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc: In function ‘int main(int, char**)’:
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:85:15: error: conflicting declaration ‘ns3::Ptr<ns3::Ipv4> ipv4’
-   85 |     Ptr<Ipv4> ipv4 = ueNode->GetObject<Ipv4>();
-      |               ^~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:60:23: note: previous declaration as ‘ns3::Ipv4AddressHelper ipv4’
-   60 |     Ipv4AddressHelper ipv4;
-      |                       ^~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:86:28: error: base operand of ‘->’ has non-pointer type ‘ns3::Ipv4AddressHelper’
-   86 |     Ipv4Address addr = ipv4->GetAddress(1, 0).GetLocal();
-      |                            ^~
-ninja: build stopped: subcommand failed.
+RSRP: -48.9745
+0x565302a976b0 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 8-----
+RSRP: -48.9745
+0x565302a976b0 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 9-----
+RSRP: -48.9745
+0x565302a976b0 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+-----sub frame 10-----
+RSRP: -48.9745
+0x565302a976b0 cellId 1 rnti 1 RSRP 4.22113e-11 SINR 88989.2 ComponentCarrierId 0
+
+almost 200+ lines of log got printed these are the last lines
+I want just the ip adress of the source and destination and the timestamps when packets are transmitted from ue to enb and vice versa
+no need for such physical layer details
