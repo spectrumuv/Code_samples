@@ -1,10 +1,8 @@
-./ns3 run scratch/singlecell_singleue.cc
+ ./ns3 run scratch/singlecell_singleue.cc
 [0/2] Re-checking globbed directories...
 [2/2] Linking CXX executable /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/scratch/ns3.42-singlecell_singleue-default
-msg="Incompatible types. (feed to "c++filt -t" if needed)
-got=CallbackImpl<void,std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >,ns3::Ptr<ns3::Packet const>,ns3::Ptr<ns3::Ipv4>,unsigned int>
-expected=CallbackImpl<void,ns3::Ptr<ns3::Packet const>,ns3::Ptr<ns3::Ipv4>,unsigned int>", +0.000000000s -1 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h, line=628
-+0.000000000s -1 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/traced-callback.h, line=143
+2s: Packet Transmitted from 10.1.1.2 to 10.1.1.1
+NS_ASSERT failed, cond="found", msg="no EpsBearerTag found in packet to be sent", +2.000000000s 0 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/lte/model/lte-enb-rrc.cc, line=2599
 NS_FATAL, terminating
 terminate called without an active exception
 Command 'build/scratch/ns3.42-singlecell_singleue-default' died with <Signals.SIGABRT: 6>.
