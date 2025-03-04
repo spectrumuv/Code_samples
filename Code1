@@ -1,229 +1,901 @@
-give code to run a 1 cell 1 ue lte setup sending 5 packets in ns3 c++
-print statements in the terminal for when each packet is sent and source and destination ip address
-
-sample_simulator.cc
-
-#include "ns3/command-line.h"
-#include "ns3/double.h"
-#include "ns3/nstime.h"
-#include "ns3/random-variable-stream.h"
-#include "ns3/simulator.h"
-
-#include <iostream>
-
-/**
- * \file
- * \ingroup core-examples
- * \ingroup simulator
- * Example program demonstrating use of various Schedule functions.
- */
-
-using namespace ns3;
-
-namespace
-{
-
-/** Simple model object to illustrate event handling. */
-class MyModel
-{
-  public:
-    /** Start model execution by scheduling a HandleEvent. */
-    void Start();
-
-  private:
-    /**
-     *  Simple event handler.
-     *
-     * \param [in] eventValue Event argument.
-     */
-    void HandleEvent(double eventValue);
-};
-
-void
-MyModel::Start()
-{
-    Simulator::Schedule(Seconds(10.0), &MyModel::HandleEvent, this, Simulator::Now().GetSeconds());
-}
-
-void
-MyModel::HandleEvent(double value)
-{
-    std::cout << "Member method received event at " << Simulator::Now().GetSeconds()
-              << "s started at " << value << "s" << std::endl;
-}
-
-/**
- * Simple function event handler which Starts a MyModel object.
- *
- * \param [in] model The MyModel object to start.
- */
-void
-ExampleFunction(MyModel* model)
-{
-    std::cout << "ExampleFunction received event at " << Simulator::Now().GetSeconds() << "s"
-              << std::endl;
-    model->Start();
-}
-
-/**
- * Simple function event handler; this function is called randomly.
- */
-void
-RandomFunction()
-{
-    std::cout << "RandomFunction received event at " << Simulator::Now().GetSeconds() << "s"
-              << std::endl;
-}
-
-/** Simple function event handler; the corresponding event is cancelled. */
-void
-CancelledEvent()
-{
-    std::cout << "I should never be called... " << std::endl;
-}
-
-} // unnamed namespace
-
-int
-main(int argc, char* argv[])
-{
-    CommandLine cmd(__FILE__);
-    cmd.Parse(argc, argv);
-
-    MyModel model;
-    Ptr<UniformRandomVariable> v = CreateObject<UniformRandomVariable>();
-    v->SetAttribute("Min", DoubleValue(10));
-    v->SetAttribute("Max", DoubleValue(20));
-
-    Simulator::Schedule(Seconds(10.0), &ExampleFunction, &model);
-
-    Simulator::Schedule(Seconds(v->GetValue()), &RandomFunction);
-
-    EventId id = Simulator::Schedule(Seconds(30.0), &CancelledEvent);
-    Simulator::Cancel(id);
-
-    Simulator::Schedule(Seconds(25.0), []() {
-        std::cout << "Code within a lambda expression at time " << Simulator::Now().As(Time::S)
-                  << std::endl;
-    });
-
-    Simulator::Run();
-
-    Simulator::Destroy();
-
-    return 0;
-}
-
-log-example.cc
-
-
-/** File-local context string */
-#define NS_LOG_APPEND_CONTEXT                                                                      \
-    {                                                                                              \
-        std::clog << "(local context) ";                                                           \
-    }
-
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
+#include "ns3/mobility-module.h"
+#include "ns3/lte-module.h"
+#include "ns3/internet-module.h"
+#include "ns3/applications-module.h"
+#include "ns3/log.h"
+#include<iostream>
 
 using namespace ns3;
 
-NS_LOG_COMPONENT_DEFINE("LogExample");
+NS_LOG_COMPONENT_DEFINE("SingleCellSingleUe");
 
-/**
- * Unnamed namespace for log-example.cc
- */
-namespace
-{
-
-/** A free function with logging. */
-void
-FreeEvent()
-{
-    NS_LOG_FUNCTION_NOARGS();
-
-    NS_LOG_ERROR("FreeEvent: error msg");
-    NS_LOG_WARN("FreeEvent: warning msg");
-    NS_LOG_INFO("FreeEvent: info msg");
-    NS_LOG_LOGIC("FreeEvent: logic msg");
-    NS_LOG_DEBUG("FreeEvent: debug msg");
+void TxPacketTrace(std::string context, Ptr<const Packet> packet) {
+    std::cout<<Simulator::Now().GetSeconds()<<"s: Packet transmitted from "<<context<<std::endl;
 }
 
-/** Simple object to aggregate to a node.
- * This helps demonstrate the logging node prefix.
- */
+void RxPacketTrace(std::string context, Ptr<const Packet> packet) {
+    std::cout<<Simulator::Now().GetSeconds()<<"s: Packet received at "<<context<<std::endl;
+}
 
-class MyEventObject : public Object
-{
-  public:
-    /**
-     * \brief Get the type ID.
-     * \return the object TypeId
-     */
-    static TypeId GetTypeId()
-    {
-        static TypeId tid =
-            TypeId("MyEventObject").SetParent<Object>().AddConstructor<MyEventObject>();
-        return tid;
-    }
+int main(int argc, char *argv[]) {
 
-    /** Constructor. */
-    MyEventObject()
-    {
-        NS_LOG_FUNCTION(this);
-    }
+    LogComponentEnable("SingleCellSingleUe", LOG_LEVEL_INFO);
+    LogComponentEnable("LteHelper", LOG_LEVEL_INFO);
+    LogComponentEnable("UdpClient", LOG_LEVEL_INFO);
+    LogComponentEnable("UdpServer", LOG_LEVEL_INFO);
+    /*LogComponentEnable("LteUePhy", LOG_LEVEL_INFO);
+    LogComponentEnable("LteEnbPhy", LOG_LEVEL_INFO);
+    LogComponentEnable("LteUeMac", LOG_LEVEL_INFO);
+    LogComponentEnable("LteEnbMac", LOG_LEVEL_INFO);*/
 
-    /** Destructor. */
-    ~MyEventObject() override
-    {
-        NS_LOG_FUNCTION(this);
-    }
+    Ptr<LteHelper> lteHelper = CreateObject<LteHelper>();
 
-    /** Class member function with logging. */
-    void Event()
-    {
-        NS_LOG_FUNCTION(this);
+    NodeContainer enbNodes, ueNodes;
+    enbNodes.Create(1);
+    ueNodes.Create(1);
 
-        NS_LOG_ERROR("MyEventObject:Event: error msg");
-        NS_LOG_WARN("MyEventObject:Event: warning msg");
-        NS_LOG_INFO("MyEventObject:Event: info msg");
-        NS_LOG_LOGIC("MyEventObject:Event: logic msg");
-        NS_LOG_DEBUG("MyEventObject:Event: debug msg");
-    }
+    MobilityHelper mobility;
 
-}; // MyEventObject
+    mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
 
-NS_OBJECT_ENSURE_REGISTERED(MyEventObject);
+    mobility.Install(enbNodes);
+    mobility.Install(ueNodes);
 
-} // Unnamed namespace
+    Ptr<MobilityModel> enbMobility = enbNodes.Get(0)->GetObject<MobilityModel>();
+    enbMobility->SetPosition(Vector(0.0,0.0,0.0));
 
-int
-main(int argc, char** argv)
-{
-    CommandLine cmd;
-    cmd.Parse(argc, argv);
+    Ptr<MobilityModel> ueMobility = ueNodes.Get(0)->GetObject<MobilityModel>();
+    ueMobility->SetPosition(Vector(100.0,0.0,0.0));
+ 
+    NetDeviceContainer enbLteDevs = lteHelper->InstallEnbDevice(enbNodes);
+    NetDeviceContainer ueLteDevs = lteHelper->InstallUeDevice(ueNodes);
 
-    NS_LOG_DEBUG("Creating a Node");
-    auto node = CreateObject<Node>();
+    lteHelper->Attach(ueLteDevs.Get(0), enbLteDevs.Get(0));
 
-    NS_LOG_DEBUG("Creating MyEventObject");
-    auto myObj = CreateObject<MyEventObject>();
+    InternetStackHelper internet;
+    internet.Install(ueNodes);
+    internet.Install(enbNodes);
 
-    NS_LOG_DEBUG("Aggregating MyEventObject to Node");
-    node->AggregateObject(myObj);
+    Ipv4AddressHelper ipv4;
+    ipv4.SetBase("10.1.1.0", "255.255.255.0");
+    Ipv4InterfaceContainer ueIpIface = ipv4.Assign(ueLteDevs);
 
-    NS_LOG_INFO("Scheduling the MyEventObject::Event with node context");
-    Simulator::ScheduleWithContext(node->GetId(), Seconds(3), &MyEventObject::Event, &(*myObj));
+    uint16_t port = 9;
+    UdpServerHelper udpServer(port);
+    ApplicationContainer serverApp = udpServer.Install(ueNodes.Get(0));
+    serverApp.Start(Seconds(1.0));
+    serverApp.Stop(Seconds(10.0));
 
-    NS_LOG_INFO("Scheduling FreeEvent");
-    Simulator::Schedule(Seconds(5), FreeEvent);
+    UdpClientHelper udpClient(ueIpIface.GetAddress(0),port);
+    udpClient.SetAttribute("MaxPackets", UintegerValue(100));
+    udpClient.SetAttribute("Interval", TimeValue(MilliSeconds(10)));
+    udpClient.SetAttribute("PacketSize", UintegerValue(512));
 
-    NS_LOG_DEBUG("Starting run...");
+    ApplicationContainer clientApp = udpClient.Install(enbNodes.Get(0));
+    clientApp.Start(Seconds(2.0));
+    clientApp.Stop(Seconds(10.0));
+
+    lteHelper->EnableTraces();
+    
+    ueLteDevs.Get(0)->TraceConnectWithoutContext("Tx", MakeCallback(&TxPacketTrace));
+    enbLteDevs.Get(0)->TraceConnectWithoutContext("Rx", MakeCallback(&RxPacketTrace));
+
+    Ptr<Node> ueNode = ueNodes.Get(0);
+    Ptr<Ipv4> ipv4Device = ueNode->GetObject<Ipv4>();
+    Ipv4Address addr = ipv4Device->GetAddress(1, 0).GetLocal();
+    std::cout << "UE IP Address: " << addr << std::endl;
+
+    Simulator::Stop(Seconds(10.0));
     Simulator::Run();
-    NS_LOG_DEBUG("... run complete");
     Simulator::Destroy();
-    NS_LOG_DEBUG("Goodbye");
 
     return 0;
 }
 
+
+./ns3 run scratch/singlecell_singleue.cc
+[0/2] Re-checking globbed directories...
+[2/2] Linking CXX executable /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/scratch/ns3.42-singlecell_singleue-default
+UE IP Address: 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
+Error while sending 512 bytes to 10.1.1.1
