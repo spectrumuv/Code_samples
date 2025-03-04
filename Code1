@@ -1,13 +1,9 @@
 ./ns3 run scratch/singlecell_singleue.cc
 [0/2] Re-checking globbed directories...
-[1/2] Building CXX object scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o
-FAILED: scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o
-/usr/bin/c++ -DEIGEN_MPL2_ONLY -DHAVE_BOOST -DHAVE_BOOST_UNITS -DHAVE_EIGEN3 -DHAVE_LIBXML2 -DHAVE_PACKET_H -DHAVE_SQLITE3 -DNS3_ASSERT_ENABLE -DNS3_BUILD_PROFILE_DEBUG -DNS3_LOG_ENABLE -DPROJECT_SOURCE_PATH=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42\" -DRAW_SOCK_CREATOR=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/src/fd-net-device/ns3.42-raw-sock-creator-default\" -DTAP_DEV_CREATOR=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/src/fd-net-device/ns3.42-tap-device-creator-default\" -D__LINUX__ -I/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include -I/usr -I/usr/include/eigen3 -I/usr/include/libxml2 -Os -g -DNDEBUG -std=c++20 -fPIE   -fno-semantic-interposition -fdiagnostics-color=always -Wall -Wpedantic -MD -MT scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o -MF scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o.d -o scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o -c /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc: In function ‘int main(int, char**)’:
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:166:62: error: ‘DefaultBearer’ is not a member of ‘ns3::EpcTft’
-  166 |     lteHelper->ActivateDedicatedEpsBearer(ueLteDevs, EpcTft::DefaultBearer(), tft);
-      |                                                              ^~~~~~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:217:21: error: ‘class ns3::LteHelper’ has no member named ‘IsUeAttached’
-  217 |     if (!lteHelper->IsUeAttached(ueLteDevs.Get(0))) {
-      |                     ^~~~~~~~~~~~
-ninja: build stopped: subcommand failed.
+[2/2] Linking CXX executable /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/scratch/ns3.42-singlecell_singleue-default
+adding this eNB to the EPC
+0x559ff22602a0 cellId=1 rnti=0 UePhy CELL_SEARCH --> SYNCHRONIZED
+NS_ASSERT failed, cond="ueIpv4 || ueIpv6", msg="UEs need to have IPv4/IPv6 installed before EPS bearers can be activated", +0.000000000s -1 file=/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/lte/helper/no-backhaul-epc-helper.cc, line=480
+NS_FATAL, terminating
+terminate called without an active exception
+Command 'build/scratch/ns3.42-singlecell_singleue-default' died with <Signals.SIGABRT: 6>.
