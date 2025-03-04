@@ -3,55 +3,13 @@
 [1/2] Building CXX object scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o
 FAILED: scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o
 /usr/bin/c++ -DEIGEN_MPL2_ONLY -DHAVE_BOOST -DHAVE_BOOST_UNITS -DHAVE_EIGEN3 -DHAVE_LIBXML2 -DHAVE_PACKET_H -DHAVE_SQLITE3 -DNS3_ASSERT_ENABLE -DNS3_BUILD_PROFILE_DEBUG -DNS3_LOG_ENABLE -DPROJECT_SOURCE_PATH=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42\" -DRAW_SOCK_CREATOR=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/src/fd-net-device/ns3.42-raw-sock-creator-default\" -DTAP_DEV_CREATOR=\"/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/src/fd-net-device/ns3.42-tap-device-creator-default\" -D__LINUX__ -I/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include -I/usr -I/usr/include/eigen3 -I/usr/include/libxml2 -Os -g -DNDEBUG -std=c++20 -fPIE   -fno-semantic-interposition -fdiagnostics-color=always -Wall -Wpedantic -MD -MT scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o -MF scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o.d -o scratch/CMakeFiles/scratch_singlecell_singleue.dir/singlecell_singleue.cc.o -c /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc: In function ‘void PacketTxTrace(ns3::Ptr<const ns3::Packet> 
+’:
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:26:16: error: ‘class ns3::UdpClient’ has no member named ‘GetSocket’
+   26 |     udpClient->GetSocket()->GetPeerName(destAddress);
+      |                ^~~~~~~~~
 /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc: In function ‘int main(int, char**)’:
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:110:37: error: ‘class ns3::UdpClient’ has no member named ‘GetSocket’
-  110 |     Ptr<Socket> socket = udpClient->GetSocket();
+/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:111:37: error: ‘class ns3::UdpClient’ has no member named ‘GetSocket’
+  111 |     Ptr<Socket> socket = udpClient->GetSocket();
       |                                     ^~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:111:58: error: no matching function for call to ‘MakeCallback(void (*)(ns3::Ptr<const ns3::Packet>, ns3::Ptr<ns3::Socket>), ns3::Ptr<ns3::Socket>&)’
-  111 |     socket->TraceConnectWithoutContext("Tx", MakeCallback(&PacketTxTrace, socket));
-      |                                              ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-In file included from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/object-base.h:22,
-                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/object.h:25,
-                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/object-factory.h:23,
-                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/simulator.h:27,
-                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include/ns3/simulator.h:1,
-                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/helper/event-garbage-collector.h:23,
-                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include/ns3/event-garbage-collector.h:1,
-                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/build/include/ns3/core-module.h:9,
-                 from /mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:1:
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h:700:1: note: candidate: ‘template<class T, class OBJ, class R, class ... Args> ns3::Callback<R, Args ...> ns3::MakeCallback(R (T::*)(Args ...), OBJ)’
-  700 | MakeCallback(R (T::*memPtr)(Args...), OBJ objPtr)
-      | ^~~~~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h:700:1: note:   template argument deduction/substitution failed:   
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:111:58: note:   mismatched types ‘R (T::*)(Args ...)’ and ‘void (*)(ns3::Ptr<const ns3::Packet>, ns3::Ptr<ns3::Socket>)’
-  111 |     socket->TraceConnectWithoutContext("Tx", MakeCallback(&PacketTxTrace, socket));
-      |                                              ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h:707:1: note: candidate: ‘template<class T, class OBJ, class R, class ... Args> ns3::Callback<R, Args ...> ns3::MakeCallback(R (T::*)(Args ...) const, OBJ)’
-  707 | MakeCallback(R (T::*memPtr)(Args...) const, OBJ objPtr)
-      | ^~~~~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h:707:1: note:   template argument deduction/substitution failed:   
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:111:58: note:   mismatched types ‘R (T::*)(Args ...) const’ and ‘void (*)(ns3::Ptr<const ns3::Packet>, ns3::Ptr<ns3::Socket>)’
-  111 |     socket->TraceConnectWithoutContext("Tx", MakeCallback(&PacketTxTrace, socket));
-      |                                              ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h:726:1: note: candidate: ‘template<class R, class ... Args> ns3::Callback<R, Args ...> ns3::MakeCallback(R (*)(Args ...))’
-  726 | MakeCallback(R (*fnPtr)(Args...))
-      | ^~~~~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h:726:1: note:   template argument deduction/substitution failed:   
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:111:58: note:   candidate expects 1 argument, 2 provided     
-  111 |     socket->TraceConnectWithoutContext("Tx", MakeCallback(&PacketTxTrace, socket));
-      |                                              ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h:782:1: note: candidate: ‘template<class T, class OBJ, class R, class ... Args, class ... BArgs> auto ns3::MakeCallback(R (T::*)(Args ...), OBJ, BArgs ...)’
-  782 | MakeCallback(R (T::*memPtr)(Args...), OBJ objPtr, BArgs... bargs)
-      | ^~~~~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h:782:1: note:   template argument deduction/substitution failed:   
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:111:58: note:   mismatched types ‘R (T::*)(Args ...)’ and ‘void (*)(ns3::Ptr<const ns3::Packet>, ns3::Ptr<ns3::Socket>)’
-  111 |     socket->TraceConnectWithoutContext("Tx", MakeCallback(&PacketTxTrace, socket));
-      |                                              ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h:789:1: note: candidate: ‘template<class T, class OBJ, class R, class ... Args, class ... BArgs> auto ns3::MakeCallback(R (T::*)(Args ...) const, OBJ, BArgs ...)’
-  789 | MakeCallback(R (T::*memPtr)(Args...) const, OBJ objPtr, BArgs... bargs)
-      | ^~~~~~~~~~~~
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/src/core/model/callback.h:789:1: note:   template argument deduction/substitution failed:   
-/mnt/c/Users/soumi.s/ns3project/ns-allinone-3.42/ns-3.42/scratch/singlecell_singleue.cc:111:58: note:   mismatched types ‘R (T::*)(Args ...) const’ and ‘void (*)(ns3::Ptr<const ns3::Packet>, ns3::Ptr<ns3::Socket>)’
-  111 |     socket->TraceConnectWithoutContext("Tx", MakeCallback(&PacketTxTrace, socket));
-      |                                              ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
 ninja: build stopped: subcommand failed.
