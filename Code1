@@ -1,23 +1,32 @@
-./ns3 run scratch/singlecell_singleue.cc
-[0/2] Re-checking globbed directories...
-ninja: no work to do.
+UE IP Address: 7.0.0.2
+eNB IP Address: 10.0.0.5
 Packet sent at 2s from 7.0.0.2 to 102.102.102.102
 Error while sending 1024 bytes to 1.0.0.2
+Packet sent at 2.5s from 1.0.0.2 to 102.102.102.102
+TraceDelay TX 1024 bytes to 7.0.0.2 Uid: 5 Time: +2.5s
 Packet sent at 3s from 7.0.0.2 to 102.102.102.102
 Error while sending 1024 bytes to 1.0.0.2
+Packet sent at 3.5s from 1.0.0.2 to 102.102.102.102
+TraceDelay TX 1024 bytes to 7.0.0.2 Uid: 7 Time: +3.5s
 Packet sent at 4s from 7.0.0.2 to 102.102.102.102
 Error while sending 1024 bytes to 1.0.0.2
+Packet sent at 4.5s from 1.0.0.2 to 102.102.102.102
+TraceDelay TX 1024 bytes to 7.0.0.2 Uid: 9 Time: +4.5s
 Packet sent at 5s from 7.0.0.2 to 102.102.102.102
 Error while sending 1024 bytes to 1.0.0.2
+Packet sent at 5.5s from 1.0.0.2 to 102.102.102.102
+TraceDelay TX 1024 bytes to 7.0.0.2 Uid: 11 Time: +5.5s
 Packet sent at 6s from 7.0.0.2 to 102.102.102.102
 Error while sending 1024 bytes to 1.0.0.2
+Packet sent at 6.5s from 1.0.0.2 to 102.102.102.102
+TraceDelay TX 1024 bytes to 7.0.0.2 Uid: 13 Time: +6.5s
 Packet sent at 7s from 7.0.0.2 to 102.102.102.102
 Error while sending 1024 bytes to 1.0.0.2
 Packet sent at 8s from 7.0.0.2 to 102.102.102.102
 Error while sending 1024 bytes to 1.0.0.2
 Packet sent at 9s from 7.0.0.2 to 102.102.102.102
 Error while sending 1024 bytes to 1.0.0.2
-what does this output mean?
-the ip adresses represent what?
-why the error statements?
-the packets are being delivered or not?
+
+the enb does not have an ip you said
+so print the ip of remote host and ue
+and why is this 102.102.102.102 appearing again and again
